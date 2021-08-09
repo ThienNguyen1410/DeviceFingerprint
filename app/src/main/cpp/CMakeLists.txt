@@ -6,12 +6,9 @@
 cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
+include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 project("deviceinfo")
-include_directories(HandleException.cpp)
-
-
-# Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
@@ -23,20 +20,11 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
+             HandleException.cpp
+             HardwareInfo.cpp
+             SoftwareInfo.cpp
+             NetworkInfo.cpp
              native-lib.cpp )
-
-add_library(
-        HandleException
-        SHARED
-        HandleException.cpp)
-
-add_library(
-        HardwareInfo
-        SHARED
-        HardwareInfo.cpp)
-
-
-
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
 # default, you only need to specify the name of the public NDK library
@@ -54,7 +42,9 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       native-lib
-                       HardwareInfo
-                       HandleException
+                        native-lib
+
                        ${log-lib} )
+
+
+

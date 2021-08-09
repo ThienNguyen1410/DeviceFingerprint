@@ -14,8 +14,15 @@ import com.thien.deviceinfo.adapter.MainScreenAdapter
 
 class MainActivity : AppCompatActivity() {
     lateinit var list : RecyclerView
-    var name = arrayOf("Device","Model")
-    var test = arrayOf(getBrand(),getModel())
+    var name = arrayOf("Device","Model","SDK","Security Patch","Android Version","Incremental","Base Os","Screen")
+    var test = arrayOf(getBrand(),
+        getModel(),
+        getSdk().toString(),
+        getSecurityPatch(),
+        getAndroidVersion(),
+        getBaseOs(),
+        getBuildNumber()
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +42,12 @@ class MainActivity : AppCompatActivity() {
 //    external fun getMacAddress() : String
     private external fun getModel() : String
     private external fun getBrand() : String
+    private external fun getSdk() : Int
+    private external fun getSecurityPatch():String
+    private external fun getAndroidVersion() : String
+    private external fun getBaseOs():String
+    private external fun getBuildNumber():String
+    private external fun testmac():String
 
 
     companion object {

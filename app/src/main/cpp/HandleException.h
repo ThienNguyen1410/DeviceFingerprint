@@ -8,7 +8,8 @@
 
 class HandleException {
 public:
-    static void handleException(JNIEnv *env);
+	static void handleException(JNIEnv *env);
+
 };
 
 

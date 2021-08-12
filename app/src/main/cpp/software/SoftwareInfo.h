@@ -11,8 +11,11 @@
 class SoftwareInfo {
 public:
     static jint getSDK(JNIEnv *env);
+
     static jstring getSecurityPatch(JNIEnv *env);
+
     static jstring getAndroidVersion(JNIEnv *env);
+
     static jstring getBaseOs(JNIEnv *env);
 
 };

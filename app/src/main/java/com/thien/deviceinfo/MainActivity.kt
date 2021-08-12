@@ -1,27 +1,48 @@
 package com.thien.deviceinfo
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.thien.deviceinfo.R
 import com.thien.deviceinfo.adapter.MainScreenAdapter
+import java.sql.DriverManager.println
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var list : RecyclerView
-    var name = arrayOf("Device","Model","SDK","Security Patch","Android Version","Incremental","Base Os","Screen")
-    var test = arrayOf(getBrand(),
+    lateinit var list: RecyclerView
+    var name = arrayOf(
+        "Device",
+        "Model",
+        "Device ID",
+        "SDK",
+        "Security Patch",
+        "Android Version",
+        "Base Os", "Build Number",
+        "Brand",
+        "FingerPrint",
+        "Hardware",
+        "Host",
+        "Manufacture",
+        "Product",
+        "BootLoader"
+    )
+    var test = arrayOf(
+        getDevice(),
         getModel(),
+        getID(),
         getSdk().toString(),
         getSecurityPatch(),
         getAndroidVersion(),
         getBaseOs(),
-        getBuildNumber()
+        getBuildNumber(),
+        getBrand(),
+        getFP(),
+        getHardware(),
+        getHost(),
+        getManufacture(),
+        getProduct(),
+        getBootloader()
     )
 
 
@@ -30,9 +51,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         list = findViewById(R.id.listRecyclerView)
         list.layoutManager = LinearLayoutManager(this)
-        list.adapter = MainScreenAdapter(name,test);
+        list.adapter = MainScreenAdapter(name, test)
     }
-
 
 
     /**
@@ -40,14 +60,21 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
 //    external fun getMacAddress() : String
-    private external fun getModel() : String
-    private external fun getBrand() : String
-    private external fun getSdk() : Int
-    private external fun getSecurityPatch():String
-    private external fun getAndroidVersion() : String
-    private external fun getBaseOs():String
-    private external fun getBuildNumber():String
-    private external fun testmac():String
+    private external fun getModel(): String
+    private external fun getDevice(): String
+    private external fun getSdk(): Int
+    private external fun getSecurityPatch(): String
+    private external fun getAndroidVersion(): String
+    private external fun getBaseOs(): String
+    private external fun getBuildNumber(): String
+    private external fun getID(): String
+    private external fun getBootloader(): String
+    private external fun getBrand(): String
+    private external fun getFP(): String
+    private external fun getHardware(): String
+    private external fun getHost(): String
+    private external fun getManufacture(): String
+    private external fun getProduct(): String
 
 
     companion object {

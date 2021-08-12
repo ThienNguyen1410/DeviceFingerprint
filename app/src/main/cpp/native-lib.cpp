@@ -10,6 +10,7 @@
 #include "hardware/HardwareInfo.h"
 #include "network/NetworkInfo.h"
 #include "software/SoftwareInfo.h"
+#include "permission/CheckPermission.h"
 #include "HandleException.h"
 
 extern "C"
@@ -51,14 +52,14 @@ JNIEXPORT jstring JNICALL
 Java_com_thien_deviceinfo_MainActivity_getBuildNumber(JNIEnv *env, jobject thiz) {
     return HardwareInfo::getBuildNumber(env);
 }
-//extern "C"
-//JNIEXPORT jstring JNICALL
-//Java_com_thien_deviceinfo_MainActivity_getMac(JNIEnv *env, jobject thiz) {
-//	jobject wifi_manager = NetworkInfo::getWifiManagerObj(env,thiz);
-//	jobject wifi_info = NetworkInfo::getWifiInfoObj(env,wifi_manager);
-//	jstring mac = NetworkInfo::getMacAddress(env,wifi_info);
-//	return mac;
-//}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_thien_deviceinfo_MainActivity_getMac(JNIEnv *env, jobject thiz) {
+    jobject wifi_manager = NetworkInfo::getWifiManagerObj(env, thiz);
+    jobject wifi_info = NetworkInfo::getWifiInfoObj(env, wifi_manager);
+    jstring mac = NetworkInfo::getMacAddress(env, wifi_info);
+    return mac;
+}
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_thien_deviceinfo_MainActivity_getID(JNIEnv *env, jobject thiz) {
@@ -100,9 +101,9 @@ Java_com_thien_deviceinfo_MainActivity_getProduct(JNIEnv *env, jobject thiz) {
     return HardwareInfo::getProduct(env);
 }
 
-//extern "C"
-//JNIEXPORT jboolean JNICALL
-//Java_com_thien_deviceinfo_MainActivity_testCheckPerm(JNIEnv *env, jobject thiz) {
-//	jboolean check = NetworkInfo::checkPermission(env,"READ_EXTERNAL_STORAGE",thiz);
-//	return check;
-//}
+extern "C"
+JNIEXPORT jboolean JNICALL
+Java_com_thien_deviceinfo_MainActivity_testCheckPerm(JNIEnv *env, jobject thiz) {
+    jboolean check = CheckPermission::hasPermission(env, "ACCESS_WIFI_STATE", thiz);
+    return check;
+}

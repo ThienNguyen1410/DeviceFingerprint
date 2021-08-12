@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         "Host",
         "Manufacture",
         "Product",
-        "BootLoader"
+        "BootLoader",
     )
     var test = arrayOf(
         getDevice(),
@@ -42,8 +42,9 @@ class MainActivity : AppCompatActivity() {
         getHost(),
         getManufacture(),
         getProduct(),
-        getBootloader()
-    )
+        getBootloader(),
+
+        )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,8 +53,12 @@ class MainActivity : AppCompatActivity() {
         list = findViewById(R.id.listRecyclerView)
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = MainScreenAdapter(name, test)
+        if (testCheckPerm()) {
+            Log.i("Mac : ", getMac().toString())
+        } else {
+            println("False")
+        }
     }
-
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
@@ -75,6 +80,8 @@ class MainActivity : AppCompatActivity() {
     private external fun getHost(): String
     private external fun getManufacture(): String
     private external fun getProduct(): String
+    private external fun getMac(): String
+    private external fun testCheckPerm(): Boolean
 
 
     companion object {

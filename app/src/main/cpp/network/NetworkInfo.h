@@ -18,9 +18,9 @@ public:
 
     static jstring getMacAddress(JNIEnv *env, jobject wifiInfoObj);
 
-    static jstring permission(JNIEnv *env, const char *name);
+    static jstring android_permission_name(JNIEnv *env, const char *name);
 
-    static bool checkPermission(JNIEnv *env, const char *name, jobject obj);
+    static bool android_has_permission(JNIEnv *env, const char *name, jobject obj);
 };
 
 

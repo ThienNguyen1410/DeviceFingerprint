@@ -51,3 +51,4 @@ jstring SoftwareInfo::getBaseOs(JNIEnv *env) {
     return baseOs;
 }
 
+

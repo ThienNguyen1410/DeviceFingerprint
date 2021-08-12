@@ -6,10 +6,10 @@
 #include "HandleException.h"
 
 void HandleException::handleException(JNIEnv *env) {
-	if (env->ExceptionCheck()) {
-		env->ExceptionDescribe();
-		env->ExceptionClear();
-		return;
-	}
+    if (env->ExceptionCheck()) {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+        return;
+    }
 }
 

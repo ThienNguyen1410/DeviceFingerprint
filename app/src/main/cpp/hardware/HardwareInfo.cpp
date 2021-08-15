@@ -112,16 +112,3 @@ jstring HardwareInfo::getProduct(JNIEnv *env) {
     return product;
 }
 
-
-
-//java.lang.SecurityException: getSerial: The user 10169 does not meet the requirements to access device identifiers.
-//jstring HardwareInfo::getSerial(JNIEnv *env) {
-//    jclass cls = env->FindClass("android/os/Build");
-//    HandleException::handleException(env);
-//    jmethodID methodId = env->GetStaticMethodID(cls,"getSerial", "()Ljava/lang/String;");
-//    HandleException::handleException(env);
-//    auto serial = (jstring) env->CallStaticObjectMethod(cls, methodId);
-//    env->DeleteLocalRef(cls);
-//    return serial;
-//
-//}

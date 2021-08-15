@@ -31,7 +31,8 @@ public:
     static jstring getModel(JNIEnv *env);
 
     static jstring getProduct(JNIEnv *env);
-//    static jstring getSerial(JNIEnv *env);
+
+    static jstring getSerial(JNIEnv *env);
 
 
 };

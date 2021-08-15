@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.thien.deviceinfo.adapter.MainScreenAdapter
-import java.sql.DriverManager.println
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         "Host",
         "Manufacture",
         "Product",
-        "BootLoader",
+        "BootLoader"
     )
     var test = arrayOf(
         getDevice(),
@@ -43,8 +42,7 @@ class MainActivity : AppCompatActivity() {
         getManufacture(),
         getProduct(),
         getBootloader(),
-
-        )
+    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,11 +51,7 @@ class MainActivity : AppCompatActivity() {
         list = findViewById(R.id.listRecyclerView)
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = MainScreenAdapter(name, test)
-        if (testCheckPerm()) {
-            Log.i("Mac : ", getMac().toString())
-        } else {
-            println("False")
-        }
+        Log.i("Android ID :", getAndroidID())
     }
 
     /**
@@ -82,6 +76,8 @@ class MainActivity : AppCompatActivity() {
     private external fun getProduct(): String
     private external fun getMac(): String
     private external fun testCheckPerm(): Boolean
+    private external fun getAndroidID(): String
+//    private external fun getSerial(): String
 
 
     companion object {

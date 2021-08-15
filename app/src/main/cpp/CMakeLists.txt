@@ -22,9 +22,11 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         HandleException.cpp
         hardware/HardwareInfo.cpp
+        hardware/UUID.cpp
         software/SoftwareInfo.cpp
         network/NetworkInfo.cpp
         permission/CheckPermission.cpp
+        utils/ClassUtils.cpp
         native-lib.cpp)
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

@@ -28,19 +28,19 @@ jstring NetworkInfo::getMac(JNIEnv *env) {
 
 }
 
-jobject NetworkInfo::getWifiManagerObj(JNIEnv *env, jobject jCtxObj) {
-    jclass jCtxClz = env->FindClass("android/content/Context");
+jobject NetworkInfo::getWifiManagerObj(JNIEnv *env, jobject obj) {
+    jclass context = env->FindClass("android/content/Context");
     HandleException::handleException(env);
-    jfieldID fid_wifi_service = env->GetStaticFieldID(jCtxClz, "WIFI_SERVICE",
+    jfieldID fid_wifi_service = env->GetStaticFieldID(context, "WIFI_SERVICE",
                                                       "Ljava/lang/String;");
-    jstring jstr_wifi_serveice = (jstring) env->GetStaticObjectField(jCtxClz, fid_wifi_service);
+    auto jstr_wifi_serveice = (jstring) env->GetStaticObjectField(context, fid_wifi_service);
 
-    jclass jclz = env->GetObjectClass(jCtxObj);
+    jclass jclz = env->GetObjectClass(obj);
     jmethodID mid_getSystemService = env->GetMethodID(jclz, "getSystemService",
                                                       "(Ljava/lang/String;)Ljava/lang/Object;");
-    jobject wifiManager = env->CallObjectMethod(jCtxObj, mid_getSystemService, jstr_wifi_serveice);
+    jobject wifiManager = env->CallObjectMethod(obj, mid_getSystemService, jstr_wifi_serveice);
 
-    env->DeleteLocalRef(jCtxClz);
+    env->DeleteLocalRef(context);
     env->DeleteLocalRef(jclz);
     env->DeleteLocalRef(jstr_wifi_serveice);
     return wifiManager;
@@ -64,7 +64,7 @@ jstring NetworkInfo::getMacAddress(JNIEnv *env, jobject wifiInfoObj) {
     }
     jclass jclz = env->GetObjectClass(wifiInfoObj);
     HandleException::handleException(env);
-    jmethodID mid = env->GetMethodID(jclz, "getMacAddress", "()Ljava/lang/String;");
+    jmethodID mid = env->GetMethodID(jclz, "getMacAddress", "()ljava/lang/string;");
     HandleException::handleException(env);
     auto mac = (jstring) env->CallObjectMethod(wifiInfoObj, mid);
     HandleException::handleException(env);

@@ -23,30 +23,28 @@ bool CheckPermission::hasPermission(JNIEnv *env, const char *name, jobject obj) 
     jstring perm_name = permissionName(env, name);
 
     jint PERMISSION_GRANTED = jint(-1);
-    {
-        jclass cls_packageManager = env->FindClass(
-                "android/content/pm/PackageManager"
-        );
-        jfieldID fid_PERMISSION_GRANTED = env->GetStaticFieldID(
-                cls_packageManager, "PERMISSION_GRANTED", "I"
-        );
-        PERMISSION_GRANTED = env->GetStaticIntField(
-                cls_packageManager, fid_PERMISSION_GRANTED
-        );
-    }
-    {
-        jobject activity = obj;
-        jclass cls_context = env->FindClass(
-                "android/content/Context"
-        );
-        jmethodID methodId_checkSelfPermission = env->GetMethodID(
-                cls_context, "checkSelfPermission", "(Ljava/lang/String;)I"
-        );
-        jint int_result = env->CallIntMethod(
-                activity, methodId_checkSelfPermission, perm_name
-        );
-        result = (int_result == PERMISSION_GRANTED);
-    }
+    jclass cls_packageManager = env->FindClass(
+            "android/content/pm/PackageManager"
+    );
+    jfieldID fid_PERMISSION_GRANTED = env->GetStaticFieldID(
+            cls_packageManager, "PERMISSION_GRANTED", "I"
+    );
+    PERMISSION_GRANTED = env->GetStaticIntField(
+            cls_packageManager, fid_PERMISSION_GRANTED
+    );
+    jobject activity = obj;
+    jclass cls_context = env->FindClass(
+            "android/content/Context"
+    );
+    jmethodID methodId_checkSelfPermission = env->GetMethodID(
+            cls_context, "checkSelfPermission", "(Ljava/lang/String;)I"
+    );
+    jint int_result = env->CallIntMethod(
+            activity, methodId_checkSelfPermission, perm_name
+    );
+    result = (int_result == PERMISSION_GRANTED);
 
     return result;
 }
+
+

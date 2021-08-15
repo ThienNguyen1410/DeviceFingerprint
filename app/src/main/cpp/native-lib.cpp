@@ -8,6 +8,7 @@
 #include <android/log.h>
 #include <jni.h>
 #include "hardware/HardwareInfo.h"
+#include "hardware/UUID.h"
 #include "network/NetworkInfo.h"
 #include "software/SoftwareInfo.h"
 #include "permission/CheckPermission.h"
@@ -55,10 +56,14 @@ Java_com_thien_deviceinfo_MainActivity_getBuildNumber(JNIEnv *env, jobject thiz)
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_thien_deviceinfo_MainActivity_getMac(JNIEnv *env, jobject thiz) {
-    jobject wifi_manager = NetworkInfo::getWifiManagerObj(env, thiz);
-    jobject wifi_info = NetworkInfo::getWifiInfoObj(env, wifi_manager);
-    jstring mac = NetworkInfo::getMacAddress(env, wifi_info);
-    return mac;
+    jstring mac;
+    if (CheckPermission::hasPermission(env, "ACCESS_WIFI_STATE", thiz)) {
+        jobject wifi_manager = NetworkInfo::getWifiManagerObj(env, thiz);
+        jobject wifi_info = NetworkInfo::getWifiInfoObj(env, wifi_manager);
+        mac = NetworkInfo::getMacAddress(env, wifi_info);
+        return mac;
+    }
+    return env->NewStringUTF("");
 }
 extern "C"
 JNIEXPORT jstring JNICALL
@@ -106,4 +111,15 @@ JNIEXPORT jboolean JNICALL
 Java_com_thien_deviceinfo_MainActivity_testCheckPerm(JNIEnv *env, jobject thiz) {
     jboolean check = CheckPermission::hasPermission(env, "ACCESS_WIFI_STATE", thiz);
     return check;
+}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_thien_deviceinfo_MainActivity_getAndroidID(JNIEnv *env, jobject thiz) {
+    jstring androidId;
+    if (SoftwareInfo::getSDK(env) >= 29) {
+        androidId = UUID::getAndroidId(env, thiz);
+        return androidId;
+    }
+
+    return UUID::telephonyAndroidId(env, thiz);
 }

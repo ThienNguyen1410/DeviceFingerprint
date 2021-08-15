@@ -14,6 +14,7 @@ public:
 
     static bool hasPermission(JNIEnv *env, const char *name, jobject obj);
 
+
 };
 
 

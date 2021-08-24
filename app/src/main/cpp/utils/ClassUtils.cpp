@@ -5,6 +5,7 @@
 #include "ClassUtils.h"
 #include "HandleException.h"
 
+
 jclass ClassUtils::context(JNIEnv *env) {
     jclass context = env->FindClass("android/content/Context");
     if (context != nullptr) {

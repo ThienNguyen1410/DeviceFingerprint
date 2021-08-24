@@ -1,16 +1,21 @@
 package com.thien.deviceinfo
 
+import android.content.pm.PackageInfo
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.thien.deviceinfo.adapter.MainScreenAdapter
+import java.security.Provider
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var list: RecyclerView
-    var name = arrayOf(
+    var name = mutableListOf<String>(
         "Device",
         "Model",
         "Device ID",
@@ -24,9 +29,17 @@ class MainActivity : AppCompatActivity() {
         "Host",
         "Manufacture",
         "Product",
-        "BootLoader"
+        "BootLoader",
+        "AndroidID",
+        "Battery Percent",
+        "SimSerial",
+        "SimState",
+        "User",
+        "Ip",
+        "Mac Address",
+        "Date and Time",
     )
-    var test = arrayOf(
+    var test = mutableListOf<String>(
         getDevice(),
         getModel(),
         getID(),
@@ -45,13 +58,34 @@ class MainActivity : AppCompatActivity() {
     )
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         list = findViewById(R.id.listRecyclerView)
         list.layoutManager = LinearLayoutManager(this)
-        list.adapter = MainScreenAdapter(name, test)
-        Log.i("Android ID :", getAndroidID())
+//        val REQUEST_CODE = 1
+//        ActivityCompat.requestPermissions(this,
+//            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+//            REQUEST_CODE)
+        test.add(getAndroidID())
+        test.add(batteryCapacity().toString())
+        test.add(simSerial())
+        test.add(user())
+        test.add(getMac())
+        test.add(getTime().toString())
+//        test.add(longitude().toString())
+//        test.add(latitude().toString())
+
+        for (i in securityProvider()) {
+            Log.i("Security Provider :  ", i.toString())
+        }
+        for (p in installedPackage()) {
+            Log.i("Package installed : ", p.toString())
+        }
+        Log.i("Time : ", getTime().toString())
+
+        list.adapter = MainScreenAdapter(name.toTypedArray(), test.toTypedArray())
     }
 
     /**
@@ -77,7 +111,20 @@ class MainActivity : AppCompatActivity() {
     private external fun getMac(): String
     private external fun testCheckPerm(): Boolean
     private external fun getAndroidID(): String
-//    private external fun getSerial(): String
+
+    //    private external fun getSerial(): String
+    private external fun batteryCapacity(): Int
+    private external fun simSerial(): String
+    private external fun user(): String
+
+    //    private external fun ip(): Int
+    private external fun installedPackage(): ArrayList<PackageInfo>
+    private external fun longitude(): Double
+    private external fun latitude(): Double
+    private external fun securityProvider(): kotlin.Array<Provider>
+    private external fun isSecurityEncrypt(): Boolean
+    private external fun getTime(): Date
+    //private external fun locale() : Locale
 
 
     companion object {

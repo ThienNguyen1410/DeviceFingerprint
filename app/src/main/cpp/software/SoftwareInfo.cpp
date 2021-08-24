@@ -7,10 +7,9 @@
 #include "utils/ClassUtils.h"
 #include <android/log.h>
 
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "native-lib", __VA_ARGS__))
-
 jint SoftwareInfo::getSDK(JNIEnv *env) {
     jclass cls = ClassUtils::androidBuildVersion(env);
+    HandleException::handleException(env);
     jfieldID fieldId = env->GetStaticFieldID(cls, "SDK_INT", "I");
     HandleException::handleException(env);
     jint sdk = env->GetStaticIntField(cls, fieldId);
@@ -20,6 +19,7 @@ jint SoftwareInfo::getSDK(JNIEnv *env) {
 
 jstring SoftwareInfo::getSecurityPatch(JNIEnv *env) {
     jclass cls = ClassUtils::androidBuildVersion(env);
+    HandleException::handleException(env);
     jfieldID fieldId = env->GetStaticFieldID(cls, "SECURITY_PATCH", "Ljava/lang/String;");
     HandleException::handleException(env);
     auto patch = (jstring) env->GetStaticObjectField(cls, fieldId);
@@ -29,6 +29,7 @@ jstring SoftwareInfo::getSecurityPatch(JNIEnv *env) {
 
 jstring SoftwareInfo::getAndroidVersion(JNIEnv *env) {
     jclass cls = ClassUtils::androidBuildVersion(env);
+    HandleException::handleException(env);
     jfieldID fieldId = env->GetStaticFieldID(cls, "RELEASE", "Ljava/lang/String;");
     HandleException::handleException(env);
     auto version = (jstring) env->GetStaticObjectField(cls, fieldId);
@@ -39,11 +40,10 @@ jstring SoftwareInfo::getAndroidVersion(JNIEnv *env) {
 
 jstring SoftwareInfo::getBaseOs(JNIEnv *env) {
     jclass cls = ClassUtils::androidBuildVersion(env);
+    HandleException::handleException(env);
     jfieldID fieldId = env->GetStaticFieldID(cls, "BASE_OS", "Ljava/lang/String;");
     HandleException::handleException(env);
     auto baseOs = (jstring) env->GetStaticObjectField(cls, fieldId);
     env->DeleteLocalRef(cls);
     return baseOs;
 }
-
-

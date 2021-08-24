@@ -22,9 +22,8 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         HandleException.cpp
         hardware/HardwareInfo.cpp
-        hardware/UUID.cpp
+        hardware/Identifiers.cpp
         software/SoftwareInfo.cpp
-        network/NetworkInfo.cpp
         permission/CheckPermission.cpp
         utils/ClassUtils.cpp
         native-lib.cpp)
